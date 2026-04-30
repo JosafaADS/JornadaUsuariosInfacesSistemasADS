@@ -56,4 +56,13 @@ app.get('/api/ranking', async (req, res) => {
   }
 });
 
+// Middleware de tratamento de erros global
+app.use((err, req, res, next) => {
+  console.error('Erro detectado:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Erro interno no servidor',
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
+
 module.exports = app;
